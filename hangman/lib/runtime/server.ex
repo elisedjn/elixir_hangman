@@ -4,13 +4,14 @@ defmodule Hangman.Runtime.Server do
   alias Hangman.Impl.Game
   use GenServer
 
-  ### Client processe ###
+  ### Client process ###
   def start_link(_) do
     GenServer.start_link(__MODULE__, nil)
   end
 
   ### Server process ###
   def init(_) do
+    IO.puts('New game started')
     {:ok, Game.new_game()}
   end
 
