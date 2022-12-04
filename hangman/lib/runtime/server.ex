@@ -2,7 +2,11 @@ defmodule Hangman.Runtime.Server do
   @type t :: pid()
 
   alias Hangman.Impl.Game
+  alias Hangman.Runtime.Watchdog
   use GenServer
+
+  # 1 hour
+  @idle_timeout 1 * 60 * 60 * 1000
 
   ### Client process ###
   def start_link(_) do
@@ -11,16 +15,18 @@ defmodule Hangman.Runtime.Server do
 
   ### Server process ###
   def init(_) do
-    IO.puts('New game started')
-    {:ok, Game.new_game()}
+    watcher = Watchdog.start(@idle_timeout)
+    {:ok, {Game.new_game(), watcher}}
   end
 
-  def handle_call({:make_move, guess}, _from, game) do
+  def handle_call({:make_move, guess}, _from, {game, watcher}) do
+    Watchdog.im_alive(watcher)
     {updated_game, tally} = Game.make_move(game, guess)
-    {:reply, tally, updated_game}
+    {:reply, tally, {updated_game, watcher}}
   end
 
-  def handle_call({:tally}, _from, game) do
-    {:reply, Game.tally(game), game}
+  def handle_call({:tally}, _from, {game, watcher}) do
+    Watchdog.im_alive(watcher)
+    {:reply, Game.tally(game), {game, watcher}}
   end
 end
