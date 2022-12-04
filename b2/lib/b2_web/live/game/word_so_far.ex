@@ -6,7 +6,7 @@ defmodule B2Web.Live.Game.WordSoFar do
     good_guess: "Good guess!",
     bad_guess: "That's not in the word",
     won: "You won!",
-    lost: "Sorry, you lost...",
+    lost: "Sorry, you lost. The word was...",
     already_used: "You already picked that letter"
   }
 
@@ -30,6 +30,8 @@ defmodule B2Web.Live.Game.WordSoFar do
               </div>
           <% end %>
         </div>
+        <% show = if [:won, :lost] |> Enum.member?(@tally.game_state), do: "play-again", else: "play-again hide" %>
+          <button class={show} phx-click="new_game">Play again</button>
       </div>
     """
   end
