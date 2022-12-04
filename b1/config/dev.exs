@@ -13,7 +13,7 @@ config :b1, B1Web.Endpoint,
   check_origin: false,
   code_reloader: true,
   debug_errors: true,
-  secret_key_base: "mLSwP6OQDNLdTmBdptYonHzTuuWHa+sCuR5EOnLRY2ebff6WW8KZD5+FfFDr4tgz",
+  secret_key_base: "8AoSXY6Naihrvgk3YTnWOJO2MDflR61nky8o3cqInXP0vd6XgPPDrBEftfQb3/5a",
   watchers: [
     # Start the esbuild watcher by calling Esbuild.install_and_run(:default, args)
     esbuild: {Esbuild, :install_and_run, [:default, ~w(--sourcemap=inline --watch)]}

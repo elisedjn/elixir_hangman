@@ -7,7 +7,7 @@ defmodule B1Web.Endpoint do
   @session_options [
     store: :cookie,
     key: "_b1_key",
-    signing_salt: "9XRcXfkV"
+    signing_salt: "i0/cv0CC"
   ]
 
   socket "/live", Phoenix.LiveView.Socket, websocket: [connect_info: [session: @session_options]]
